@@ -1,69 +1,71 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../../AppContext';
-import { auth, firestore } from '../../firebase';
+import { auth, db } from '../../firebase';
 import TextEditor from '../../TextEditor/TextEditor';
-import AppNavBar from '../AppNavBar/AppNavBar'
-import NotesCard from "../NotesCard/NotesCard"
+import AppNavBar from '../AppNavBar/AppNavBar';
+import AddNote from '../NotesCard/AddNote';
+import NotesCard from '../NotesCard/NotesCard';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    width: "340px",
-    height: "97px",
-    margin: "20px",
-    marginLeft: "auto",
-    marginRight: "auto",
-    textAlign: "center",
-    fontSize: "22px",
-    padding: "15px",
-    letterSpacing: "3px",
+    width: '340px',
+    height: '97px',
+    margin: '20px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    textAlign: 'center',
+    fontSize: '22px',
+    padding: '15px',
+    letterSpacing: '3px',
     background: theme.palette.primary.dark,
-    "&:hover": {
+    '&:hover': {
       background: theme.palette.grey[50],
-      transform: "translateY(-5px)",
-      transition: "0.4s ease-out",
+      transform: 'translateY(-5px)',
+      transition: '0.4s ease-out',
     },
   },
   cardTitle: {
-    padding: "0.1rem",
-    opacity: "0.9",
-    fontSize: "1.5rem",
+    padding: '0.1rem',
+    opacity: '0.9',
+    fontSize: '1.5rem',
   },
   cardValue: {
-    fontStyle: "italic",
-    padding: "10px",
+    fontStyle: 'italic',
+    padding: '10px',
   },
 }));
 
 const Dashboard = () => {
 
-
-  const getData = async () => {
-    // editorRef.doc('notes').get().then((r)=>console.log(r))
-    await firestore
-      .collection(`notesKeeper/notes/${auth.currentUser.uid}`)
-      .onSnapshot(function (querySnapShot) {
-
-        // setState(
-        //   querySnapShot.docs.map((doc) => ({
-        //     id: doc.id,
-        //     ...doc.data()
-        //   }))
-        // );
-      });
+  const { dispatch } = useContext(AppContext);
+  const getData = () => {
+    db.collection(`notesKeeper/notes/${auth.currentUser.uid}`).onSnapshot(
+      (querySnapShot) => {
+        const payload = querySnapShot.docs.map((doc) => ({ id:doc.id,...doc.data() }));
+        dispatch({ type: 'SET_NOTES', payload });
+      }
+    );
   };
   useEffect(() => {
     getData();
   }, []);
 
-  const classes = useStyles()
+  const classes = useStyles();
+
   return (
     <>
       <AppNavBar />
-      <div style={{ backgroundColor: '',marginLeft:'200px',marginRight:'200px' }}>
-
-      <TextEditor/>
-      <NotesCard/>
+      <div
+        style={{
+          backgroundColor: '',
+          marginLeft: '200px',
+          marginRight: '200px',
+        }}
+      >
+        {/* <TextEditor /> */}
+        <AddNote/>
+        <NotesCard />
       </div>
     </>
   );

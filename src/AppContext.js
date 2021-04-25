@@ -5,10 +5,10 @@ import { useReducer, createContext } from 'react';
 
 const initialState = {
   currentUser: null,
-  selectedNoteIndex:null,
-  selectedNote:null,
-  loading:true,
-  notes:null
+  selectedNoteIndex: null,
+  selectedNote: null,
+  loading: true,
+  notes: null,
 };
 
 const reducer = (state, action) => {
@@ -18,6 +18,8 @@ const reducer = (state, action) => {
       return { ...state, loading: payload || false };
     case 'SET_NOTES':
       return { ...state, notes: payload || [] };
+    case 'SET_EDITOR_TEXT':
+      return { ...state, editorText: payload || {} };
     case 'LOGOUT':
       // delete api.defaults.headers.common.Authorization;
       // localStorage.removeItem(TOKEN);
@@ -40,26 +42,7 @@ const AppContext = createContext({
 const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const getToken = () => {
-    // return localStorage.getItem(TOKEN) || null;
-  };
-
-  const isAuthenticated = () => {
-    return state.authenticated;
-  };
-
-  const initializeAuth = (authToken) => {
-    const token = authToken || getToken();
-    if (token) {
-      // api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      // const userData = jwtDecode(token);
-      dispatch({ type: 'SET_TOKEN', payload: token });
-      dispatch({ type: 'SET_AUTHENTICATED', payload: true });
-      // dispatch({ type: 'SET_CURRENT_USER', payload: userData });
-    }
-  };
-
-  const value = { state, dispatch, initializeAuth, isAuthenticated, getToken };
+  const value = { state, dispatch };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 
@@ -10,10 +10,11 @@ import './App.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { darkTheme, lightTheme } from './theme';
 import Login from './components/Auth/Login';
-import { auth } from './firebase';
+import { auth, firestore } from './firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Button } from '@material-ui/core';
 import Dashboard from './components/Dashboard/Dashboard';
+import UpdateNote from './components/NotesCard/UpdateNote';
 
 const App = () => {
   const [theme, setTheme] = useState(darkTheme);
@@ -36,7 +37,7 @@ const App = () => {
       setThemeToggler(true);
       setTheme(darkTheme);
     }
-  };
+  }
 
   return (
     <>
@@ -57,6 +58,7 @@ const App = () => {
                 />
                 {/* <AuthRoute exact path="/signup" component={SignUp} /> */}
                 <Route exact path='/login' component={Login} />
+                <Route exact path='/edit/:noteId' component={UpdateNote} />
 
                 <Dashboard />
                 <Button onClick={signOut} className='signout-btn'>

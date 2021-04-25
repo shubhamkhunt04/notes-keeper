@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Box,
   Card,
@@ -13,6 +13,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import NoteCard from './NoteCard';
+import { AppContext } from '../../AppContext';
 
 const useStyles = makeStyles({
   root: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles({
 
 const NotesCard = () => {
   const classes = useStyles();
-  
+  const {state :{notes = [] }} = useContext(AppContext)
   return (
     <>
       <Typography variant='h5' className={classes.heading}>
@@ -43,8 +44,8 @@ const NotesCard = () => {
       </Typography>
       <div className={classes.root}>
         <Grid container spacing={4}>
-          {new Array(10).fill(0).map((song,index) => {
-            return <NoteCard key={index} />;
+          {notes?.map((note) => {
+            return <NoteCard key={note.id} title={note.title} body={note.body} noteId={note.id} />;
           })}
         </Grid>
       </div>

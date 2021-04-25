@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles, CardMedia, Grid, Box, Card } from '@material-ui/core';
+import LikeSong from './NoteAction';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,16 +72,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NoteCard = ({ musicData, cardClickHandler, as }) => {
+const NoteCard = ({ title, body,noteId }) => {
   const mouseEnterHandler = (songId) => {
     const target = document.getElementById(songId);
-    target.src = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.HJ9lEAbyZFBEQzDmVb8zHwHaF7%26pid%3DApi&f=1"
+    target.src =
+      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.HJ9lEAbyZFBEQzDmVb8zHwHaF7%26pid%3DApi&f=1';
   };
 
-  const mouseLeaveHandler = (songId) => {
-    const target = document.getElementById(songId);
-    target.src = musicData.cover;
-  };
+//   const mouseLeaveHandler = (songId) => {
+//     const target = document.getElementById(songId);
+//     target.src = musicData.cover;
+//   };
 
   const classes = useStyles();
   return (
@@ -97,20 +99,19 @@ const NoteCard = ({ musicData, cardClickHandler, as }) => {
     >
       <Card
         className={classes.card}
-        title="This is Title"
+        title='This is Title'
         // onClick={() => cardClickHandler(musicData._id)}
         // onMouseEnter={() => mouseEnterHandler(musicData._id)}
         // onMouseLeave={() => mouseLeaveHandler(musicData._id)}
       >
         <Box className={classes.box}>
-         
-
-          <div className={classes.cardTitle}>Note title</div>
+          <div className={classes.cardTitle}>{title}</div>
           <div>
-            <p className={classes.artistName}>Note description</p>
+            <p className={classes.artistName}>{body}</p>
           </div>
         </Box>
       </Card>
+       <LikeSong noteId={noteId} />
     </Grid>
   );
 };
