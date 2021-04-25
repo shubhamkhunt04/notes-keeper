@@ -1,11 +1,10 @@
 import { Button, makeStyles } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
-import ReactQuill from 'react-quill'; // ES6
-import BorderColorIcon from '@material-ui/icons/BorderColor';
 import TextEditor from '../../TextEditor/TextEditor';
 import { AppContext } from '../../AppContext';
 import { auth, db } from '../../firebase';
 import { removeHTMLTags } from '../../utils.js/RemoveHtml';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +47,6 @@ const AddNote = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
-  const [state, setState] = useState(null);
   const { dispatch } = useContext(AppContext);
 
   const noteRef = db.collection(`notesKeeper/notes/${auth.currentUser.uid}`);
@@ -57,26 +55,23 @@ const AddNote = () => {
     setBody(val);
   };
 
-  const addNotes = () => {
-    console.log('add notes called');
+  const addNotes = async () => {
     const bodyWithoutHtml = removeHTMLTags(body);
-    console.log(bodyWithoutHtml);
-
-    noteRef.add({ title, body: bodyWithoutHtml || '-' });
-  };
-  const deleteBtnHandler = (id) => {
-    noteRef.doc(id).delete();
+    try {
+      await noteRef.add({ title, body: bodyWithoutHtml || '-' });
+      toast.success('New Note Created');
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   const onTitleChange = (e) => {
     e.preventDefault();
     setTitle(e.target.value);
   };
-  console.log(state);
   return (
     <div className={classes.editorContainer}>
       <h1>Tetx TextEditor</h1>
-      {/* <BorderColorIcon className={classes.editIcon}></BorderColorIcon> */}
       <input
         className={classes.titleInput}
         placeholder='Note title...'
@@ -88,24 +83,6 @@ const AddNote = () => {
       <Button variant='contained' onClick={addNotes}>
         Add Note
       </Button>
-      {state?.map((note) => {
-        return (
-          <>
-            <div style={{ color: 'white ' }}>
-              {JSON.stringify(note)}
-              <h4>{note.title}</h4>
-              <h4>{note.body}</h4>
-              <Button
-                variant='outlined'
-                color='secondary'
-                onClick={() => deleteBtnHandler(note.id)}
-              >
-                Delete
-              </Button>
-            </div>
-          </>
-        );
-      })}
     </div>
   );
 };

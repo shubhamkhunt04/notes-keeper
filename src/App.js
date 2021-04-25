@@ -15,6 +15,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Button } from '@material-ui/core';
 import Dashboard from './components/Dashboard/Dashboard';
 import UpdateNote from './components/NotesCard/UpdateNote';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   const [theme, setTheme] = useState(darkTheme);

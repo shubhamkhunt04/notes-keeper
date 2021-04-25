@@ -80,6 +80,7 @@ const AppNavBar = () => {
           <Typography className={classes.title} variant='h6' noWrap>
             Notes Keeper{' '}
           </Typography>
+          
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

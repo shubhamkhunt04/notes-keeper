@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
+import { toast } from 'react-toastify';
 import { auth, db } from '../../firebase';
 import TextEditor from '../../TextEditor/TextEditor';
 import { removeHTMLTags } from '../../utils.js/RemoveHtml';
@@ -23,10 +24,10 @@ const UpdateNote = () => {
   };
 
   const getNote = async () => {
-    const { title = '', body = '' } = (await noteRef.doc(noteId).get()).data();
+    const { title, body } = (await noteRef.doc(noteId).get()).data();
 
-    setTitle(title);
-    setBody(body);
+    setTitle(title || '');
+    setBody(body || '');
   };
   useEffect(() => {
     getNote();
@@ -34,11 +35,13 @@ const UpdateNote = () => {
 
   const updateNote = async () => {
     const bodyWithoutHtml = removeHTMLTags(body);
-    const updateInfo = await noteRef
-      .doc(noteId)
-      .update({ title, body: bodyWithoutHtml });
-    console.log(updateInfo);
-    history.push('/');
+    try {
+      await noteRef.doc(noteId).update({ title, body: bodyWithoutHtml });
+      history.push('/');
+      toast.success('Note Updated Successfully');
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (

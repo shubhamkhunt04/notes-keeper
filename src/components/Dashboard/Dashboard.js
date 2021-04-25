@@ -1,11 +1,12 @@
-import { Grid, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import React, { useContext, useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { AppContext } from '../../AppContext';
 import { auth, db } from '../../firebase';
-import TextEditor from '../../TextEditor/TextEditor';
 import AppNavBar from '../AppNavBar/AppNavBar';
 import AddNote from '../NotesCard/AddNote';
 import NotesCard from '../NotesCard/NotesCard';
+import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,12 +38,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = () => {
-
   const { dispatch } = useContext(AppContext);
   const getData = () => {
     db.collection(`notesKeeper/notes/${auth.currentUser.uid}`).onSnapshot(
       (querySnapShot) => {
-        const payload = querySnapShot.docs.map((doc) => ({ id:doc.id,...doc.data() }));
+        const payload = querySnapShot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         dispatch({ type: 'SET_NOTES', payload });
       }
     );
@@ -55,7 +58,9 @@ const Dashboard = () => {
 
   return (
     <>
+      <ToastContainer />
       <AppNavBar />
+    
       <div
         style={{
           backgroundColor: '',
@@ -63,8 +68,7 @@ const Dashboard = () => {
           marginRight: '200px',
         }}
       >
-        {/* <TextEditor /> */}
-        <AddNote/>
+        <AddNote />
         <NotesCard />
       </div>
     </>

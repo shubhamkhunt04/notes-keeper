@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, CardMedia, Grid, Box, Card } from '@material-ui/core';
-import LikeSong from './NoteAction';
+import LikeSong from './NoteCardBtn';
 
 const useStyles = makeStyles((theme) => ({
   root: {

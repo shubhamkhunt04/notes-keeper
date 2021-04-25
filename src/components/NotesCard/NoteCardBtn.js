@@ -5,6 +5,7 @@ import {
   FavoriteOutlined as FavoriteOutlinedIcon,
   EditOutlined as EditIcon,
 } from '@material-ui/icons';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { AppContext } from '../../AppContext';
 import { auth, db } from '../../firebase';
 import { useHistory } from 'react-router';
@@ -28,41 +29,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LikeSong = ({ noteId }) => {
+const NoteCardBtn = ({ noteId }) => {
   const classes = useStyles();
-  const history = useHistory()
-  const [like, setLike] = useState(false);
-  const {
-    dispatch,
-  } = useContext(AppContext);
+  const history = useHistory();
+
+  const noteRef = db.collection(`notesKeeper/notes/${auth.currentUser.uid}`);
+
+  const { dispatch } = useContext(AppContext);
 
   const editBtnHandler = async (noteId) => {
     console.log('Edit called', noteId);
-    const payload = (
-      await db
-        .collection(`notesKeeper/notes/${auth.currentUser.uid}`)
-        .doc(noteId)
-        .get()
-    ).data();
+    const payload = (await noteRef.doc(noteId).get()).data();
     dispatch({ type: 'SET_EDITOR_TEXT', payload });
-    console.log("Hello payload", payload);
-    history.push(`/edit/${noteId}`)
+    history.push(`/edit/${noteId}`);
   };
+
+  const deleteBtnHandler = async (noteId) => {
+    noteRef.doc(noteId).delete();
+  };
+
   return (
     // <div className={classes.likeBtn} onClick={() => likeSong(noteId)}>
-      <>
-        <IconButton>
-          <FavoriteBorderOutlinedIcon
-            color='secondary'
-            className={classes.likeBtnSize}
-          />
-        </IconButton>
-        <IconButton onClick={() => editBtnHandler(noteId)}>
-          <EditIcon color='secondary' className={classes.likeBtnSize} />
-        </IconButton>
-      </>
+    <>
+      <IconButton onClick={() => deleteBtnHandler(noteId)}>
+        <DeleteOutlineIcon color='secondary' className={classes.likeBtnSize} />
+      </IconButton>
+      <IconButton onClick={() => editBtnHandler(noteId)}>
+        <EditIcon color='secondary' className={classes.likeBtnSize} />
+      </IconButton>
+    </>
     // </div>
   );
 };
 
-export default LikeSong;
+export default NoteCardBtn;
