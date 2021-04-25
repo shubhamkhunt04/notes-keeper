@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginTop: '3rem',
     width: '375px',
+    [theme.breakpoints.down('md')]: {
+      minWidth: '150px',
+    },
   },
   updateBtn: {
     marginTop: '70px',
@@ -75,6 +78,8 @@ const UpdateNote = () => {
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
+            margin: 'auto',
+            maxWidth: '80vw',
           }}
         >
           <h1 style={{ color: 'white' }}>Update Note</h1>
@@ -85,6 +90,7 @@ const UpdateNote = () => {
           onChange={onTitleChange}
           value={title}
         /> */}
+        <div style={{width:'auto'}}>
           <TextField
             id='outlined-flexible'
             label='Note Title'
@@ -99,6 +105,7 @@ const UpdateNote = () => {
             required
           />
           <TextEditor value={body} onChange={onBodyChange} />
+          </div>
           <Button
             variant='contained'
             onClick={updateNote}

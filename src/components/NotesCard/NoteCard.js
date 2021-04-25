@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
     },
 
     [theme.breakpoints.down('md')]: {
-      width: '150px',
-      height: '210px',
+      width: '190px',
+      height: '150px',
     },
   },
   cardContent: {
@@ -49,14 +49,6 @@ const useStyles = makeStyles((theme) => ({
   cardTitle: {
     fontSize: '1rem',
     margin: '10px auto 3px',
-    [theme.breakpoints.between('sm', 'md')]: {
-      fontSize: '13px',
-    },
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '12px',
-    },
-  },
-  artistName: {
     [theme.breakpoints.between('sm', 'md')]: {
       fontSize: '13px',
     },

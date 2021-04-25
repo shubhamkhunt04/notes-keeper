@@ -12,18 +12,24 @@ import { useHistory } from 'react-router';
 // import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
-  likeBtn: {
+  actionBtn: {
     zIndex: '98',
     position: 'absolute',
-    marginLeft: '185px', // 106
-    marginTop: '30px', // 175
+    marginLeft: '185px',
+    marginTop: '30px',
     cursor: 'pointer',
     [theme.breakpoints.down('md')]: {
-      marginTop: '175px',
+      marginLeft: '70px',
+      marginTop: '-15px',
+      marginRight: '10px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: '13px',
+      marginTop: '-15px',
       marginRight: '10px',
     },
   },
-  likeBtnSize: {
+  actionBtnSize: {
     width: '26px',
     height: '26px',
   },
@@ -49,15 +55,16 @@ const NoteCardBtn = ({ noteId }) => {
   };
 
   return (
-    <div className={classes.likeBtn}>
-    <>
+    <div className={classes.actionBtn}>
       <IconButton onClick={() => deleteBtnHandler(noteId)}>
-        <DeleteOutlineIcon color='secondary' className={classes.likeBtnSize} />
+        <DeleteOutlineIcon
+          color='secondary'
+          className={classes.actionBtnSize}
+        />
       </IconButton>
       <IconButton onClick={() => editBtnHandler(noteId)}>
-        <EditIcon color='secondary' className={classes.likeBtnSize} />
+        <EditIcon color='secondary' className={classes.actionBtnSize} />
       </IconButton>
-    </>
     </div>
   );
 };

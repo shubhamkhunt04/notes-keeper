@@ -32,6 +32,7 @@ const App = () => {
   };
 
   const themeHandler = () => {
+    console.log("theme handler called")
     if (themeToggler) {
       setThemeToggler(false);
       setTheme(lightTheme);

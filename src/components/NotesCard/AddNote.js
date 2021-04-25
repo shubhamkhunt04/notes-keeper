@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     width: '498px',
+    [theme.breakpoints.down('md')]: {
+      width: 'auto',
+    },
   },
 }));
 
@@ -84,17 +87,21 @@ const AddNote = () => {
   };
   return (
     <>
-      <div className={classes.editorContainer}>
-        <p style={{ fontSize: '26px', marginBottom: '4rem' }}>
-          The simplest way to keep notes :{'}'}{' '}
+      {/* <div className={classes.editorContainer}> */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+          margin: 'auto',
+          maxWidth: '80vw',
+        }}
+      >
+        <p style={{ fontSize: '26px', marginBottom: '4rem', color: 'white' }}>
+          The simplest way to keep notes :{'}'}
         </p>
-        {/* <input
-        className={classes.titleInput}
-        placeholder='Note title...'
-        onChange={onTitleChange}
-      /> */}
 
-        {/* <TextField label='Note Title' variant='outlined' color='secondary' /> */}
         <TextField
           id='outlined-flexible'
           label='Note Title'
@@ -107,6 +114,7 @@ const AddNote = () => {
           value={title}
           autoComplete='off'
           required
+          style={{ marginBottom: '1.7rem' }}
         />
         <TextEditor value={body} onChange={onBodyChange} />
       </div>
