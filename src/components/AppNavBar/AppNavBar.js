@@ -5,7 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import { Button } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
+import DeleteSweepOutlinedIcon from '@material-ui/icons/DeleteSweepOutlined';
+import { auth } from '../../firebase';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,7 +82,6 @@ const AppNavBar = () => {
           <Typography className={classes.title} variant='h6' noWrap>
             Notes Keeper{' '}
           </Typography>
-          
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -93,8 +94,9 @@ const AppNavBar = () => {
               }}
               inputProps={{ 'aria-label': 'search' }}
             />
+
           </div>
-          <Button variant='contained'>Logout</Button>
+          <Button variant='contained' onClick={()=>auth.signOut()} >Logout</Button>
         </Toolbar>
       </AppBar>
     </div>
