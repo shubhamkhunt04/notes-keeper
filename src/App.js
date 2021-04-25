@@ -16,6 +16,7 @@ import { Button } from '@material-ui/core';
 import Dashboard from './components/Dashboard/Dashboard';
 import UpdateNote from './components/NotesCard/UpdateNote';
 import { ToastContainer } from 'react-toastify';
+import Error404 from './Error404/Error404';
 
 const App = () => {
   const [theme, setTheme] = useState(darkTheme);
@@ -38,7 +39,7 @@ const App = () => {
       setThemeToggler(true);
       setTheme(darkTheme);
     }
-  }
+  };
 
   return (
     <>
@@ -61,10 +62,11 @@ const App = () => {
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/edit/:noteId' component={UpdateNote} />
 
-                <Dashboard />
-                <Button onClick={signOut} className='signout-btn'>
+                {/* <Dashboard /> */}
+                {/* <Button onClick={signOut} className='signout-btn'>
                   Sign Out
-                </Button>
+                </Button> */}
+                <Route path='*' component={Error404} />
               </Switch>
             </Router>
           </>

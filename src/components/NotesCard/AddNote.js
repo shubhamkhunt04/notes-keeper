@@ -49,7 +49,6 @@ const AddNote = () => {
   const classes = useStyles();
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const [error, setError] = useState('');
 
   const { dispatch } = useContext(AppContext);
 
