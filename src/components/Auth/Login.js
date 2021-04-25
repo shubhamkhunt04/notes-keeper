@@ -1,9 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles, TextField, Button, Divider } from '@material-ui/core';
 import firebase from 'firebase';
-import { useHistory } from 'react-router-dom';
 import { auth } from '../../firebase';
-// import { AuthContext } from "../../context/auth";
+import { AppContext } from '../../AppContext';
+import Loader from '../Loader/Loader';
+import googleLogo from '../../assets/googleLogo.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,13 +27,17 @@ const useStyles = makeStyles((theme) => ({
     margin: '10px',
     width: '500px',
   },
+  btn: {
+    marginLeft: '20px',
+  },
 }));
 
 const Login = () => {
-  document.getElementsByTagName('html')[0].style.background = 'black';
-  //   const context = useContext(AuthContext);
-
   const classes = useStyles();
+  const {
+    state: { loading },
+    dispatch,
+  } = useContext(AppContext);
   const [error, setError] = useState(false);
   const [emailHelperText, setEmailHelperText] = useState('');
   const [passwordHelperText, setPasswordHelperText] = useState('');
@@ -49,46 +54,30 @@ const Login = () => {
     setPasswordHelperText('');
   };
 
-  const history = useHistory();
-  //   const [loginUser, { loading }] = useMutation(ADMIN_LOGIN_MUTATION, {
-  //     update(_, result) {
-  //       if (result) {
-  //         context.adminLogin(result.data.adminLogin);
-  //         history.push("/");
-  //       }
-  //     },
-  //     onError(err) {
-  //       //   setErrors(err.graphQLErrors[0].extensions.exception.errors);
-  //     },
-  //     variables: values,
-  //   });
-
-  const signInWithGoogle = () => {
-    auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  const signInWithGoogle = async () => {
+    await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   };
 
   const signIn = async () => {
-    // dispatch({ type: 'SET_LOADING', data: true });
+    dispatch({ type: 'SET_LOADING', payload: true });
     try {
-      const userAuth = await auth.signInWithEmailAndPassword(
-        values.email,
-        values.password
-      );
-      console.log(userAuth);
+      // check user auth.
+      await auth.signInWithEmailAndPassword(values.email, values.password);
+      dispatch({ type: 'SET_LOADING', payload: false });
     } catch (err) {
+      dispatch({ type: 'SET_LOADING', payload: false });
       console.log(err);
     }
   };
 
   const signUp = async () => {
+    dispatch({ type: 'SET_LOADING', payload: true });
     try {
-      const newUser = await auth.createUserWithEmailAndPassword(
-        values.email,
-        values.password
-      );
-      console.log(newUser);
+      // new user
+      await auth.createUserWithEmailAndPassword(values.email, values.password);
+      dispatch({ type: 'SET_LOADING', payload: false });
     } catch (err) {
-      console.log(err);
+      dispatch({ type: 'SET_LOADING', payload: false });
     }
   };
 
@@ -113,7 +102,7 @@ const Login = () => {
       setPasswordHelperText('Password must not be empty');
     } else if (values.password.toString().length < 8) {
       setError(true);
-      setPasswordHelperText('Password Length atleast 8 characters');
+      setPasswordHelperText('Password Length at least 8 characters');
     } else {
       setError(false);
     }
@@ -122,104 +111,94 @@ const Login = () => {
   const onFormSubmit = (e) => {
     e.preventDefault();
     formValidation();
-    // loginUser();
-    console.log('form is submited');
+    console.log('form submited');
   };
 
   return (
     <div>
-      <Button variant='outlined' color='secondary' onClick={signUp}>
-        SignUP
-      </Button>
-      <Button variant='outlined' color='secondary' onClick={signIn}>
-        SignIn
-      </Button>
-      <Button
-        variant='outlined'
-        color='secondary'
-        className='google-btn'
-        onClick={signInWithGoogle}
-      >
-        <TextField>Sign in with Google</TextField>
-      </Button>
-      <h1 className={classes.title}>Notes Keeper</h1>
-      <form
-        className={classes.root}
-        noValidate
-        autoComplete='off'
-        onSubmit={onFormSubmit}
-      >
-        <div>
-          <TextField
-            id='outlined-flexible'
-            label='Email'
-            variant='outlined'
-            color='secondary'
-            type='email'
-            name='email'
-            onChange={onChange}
-            error={emailHelperText ? 1 : 0}
-            helperText={emailHelperText}
-            size='small'
-            className={classes.textField}
-          />
-        </div>
-        <div>
-          <TextField
-            id='outlined-flexible'
-            label='Password'
-            variant='outlined'
-            color='secondary'
-            type='password'
-            name='password'
-            onChange={onChange}
-            error={passwordHelperText ? 1 : 0}
-            helperText={passwordHelperText}
-            size='small'
-            className={classes.textField}
-          />
-        </div>
-        <div>
-          <Button
-            variant='outlined'
-            color='secondary'
-            type='submit'
-            startIcon={
-              <img
-                src='https://www.raqnbeauty.com/wp-content/uploads/2020/06/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png'
-                alt='Google'
-                width='20px'
-                height='20px'
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <h1 className={classes.title}>Notes Keeper</h1>
+          <form
+            className={classes.root}
+            noValidate
+            autoComplete='off'
+            onSubmit={onFormSubmit}
+          >
+            <div>
+              <Button
+                variant='outlined'
+                color='secondary'
+                type='submit'
+                startIcon={
+                  <img
+                    src={googleLogo}
+                    alt='Google'
+                    width='20px'
+                    height='20px'
+                  />
+                }
+                className={classes.textField}
+                onClick={signInWithGoogle}
+              >
+                Sign In With Google
+              </Button>
+            </div>
+            <div>
+              <TextField
+                id='outlined-flexible'
+                label='Email'
+                variant='outlined'
+                color='secondary'
+                type='email'
+                name='email'
+                onChange={onChange}
+                error={emailHelperText ? 1 : 0}
+                helperText={emailHelperText}
+                size='small'
+                className={classes.textField}
               />
-            }
-            className={classes.textField}
-            onClick={signInWithGoogle}
-          >
-            Sign In With Google
-          </Button>
-        </div>
-        <Divider />
-        <div>
-          <Button
-            variant='outlined'
-            color='secondary'
-            type='submit'
-            onClick={signIn}
-            // className={classes.textField}
-          >
-            Log In
-          </Button>
-          <Button
-            variant='outlined'
-            color='secondary'
-            type='submit'
-            onClick={signUp}
-            // className={classes.textField}
-          >
-            Sign Up
-          </Button>
-        </div>
-      </form>
+            </div>
+            <div>
+              <TextField
+                id='outlined-flexible'
+                label='Password'
+                variant='outlined'
+                color='secondary'
+                type='password'
+                name='password'
+                onChange={onChange}
+                error={passwordHelperText ? 1 : 0}
+                helperText={passwordHelperText}
+                size='small'
+                className={classes.textField}
+              />
+            </div>
+            <div>
+              <Button
+                variant='outlined'
+                color='secondary'
+                type='submit'
+                onClick={signIn}
+                // className={classes.btn}
+              >
+                Log In
+              </Button>
+              <Button
+                variant='outlined'
+                color='secondary'
+                type='submit'
+                onClick={signUp}
+                className={classes.btn}
+              >
+                Sign Up
+              </Button>
+            </div>
+          </form>
+        </>
+      )}
     </div>
   );
 };
