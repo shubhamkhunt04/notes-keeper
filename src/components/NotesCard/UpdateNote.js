@@ -35,12 +35,16 @@ const UpdateNote = () => {
 
   const updateNote = async () => {
     const bodyWithoutHtml = removeHTMLTags(body);
-    try {
-      await noteRef.doc(noteId).update({ title, body: bodyWithoutHtml });
-      history.push('/');
-      toast.success('Note Updated Successfully');
-    } catch (err) {
-      toast.error(err.message);
+    if (!title || !body) {
+      toast.error('Please add note title and description field');
+    } else {
+      try {
+        await noteRef.doc(noteId).update({ title, body: bodyWithoutHtml });
+        history.push('/');
+        toast.success('Note Updated Successfully');
+      } catch (err) {
+        toast.error(err.message);
+      }
     }
   };
 

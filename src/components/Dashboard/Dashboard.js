@@ -5,7 +5,7 @@ import { AppContext } from '../../AppContext';
 import { auth, db } from '../../firebase';
 import AppNavBar from '../AppNavBar/AppNavBar';
 import AddNote from '../NotesCard/AddNote';
-import NotesCard from '../NotesCard/NotesCard';
+import NotesCard from '../NotesCard/Notes';
 import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +60,7 @@ const Dashboard = () => {
     <>
       <ToastContainer />
       <AppNavBar />
-    
+
       <div
         style={{
           backgroundColor: '',

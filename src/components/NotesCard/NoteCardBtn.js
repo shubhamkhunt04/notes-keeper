@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
   likeBtn: {
     zIndex: '98',
     position: 'absolute',
-    marginLeft: '115px', // 106
-    marginTop: '210px', // 175
+    marginLeft: '185px', // 106
+    marginTop: '30px', // 175
     cursor: 'pointer',
     [theme.breakpoints.down('md')]: {
       marginTop: '175px',
@@ -49,7 +49,7 @@ const NoteCardBtn = ({ noteId }) => {
   };
 
   return (
-    // <div className={classes.likeBtn} onClick={() => likeSong(noteId)}>
+    <div className={classes.likeBtn}>
     <>
       <IconButton onClick={() => deleteBtnHandler(noteId)}>
         <DeleteOutlineIcon color='secondary' className={classes.likeBtnSize} />
@@ -58,7 +58,7 @@ const NoteCardBtn = ({ noteId }) => {
         <EditIcon color='secondary' className={classes.likeBtnSize} />
       </IconButton>
     </>
-    // </div>
+    </div>
   );
 };
 

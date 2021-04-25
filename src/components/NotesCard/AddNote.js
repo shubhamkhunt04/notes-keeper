@@ -1,8 +1,8 @@
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, makeStyles, TextField } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
 import TextEditor from '../../TextEditor/TextEditor';
 import { AppContext } from '../../AppContext';
-import { auth, db } from '../../firebase';
+import { auth, db, timestamp } from '../../firebase';
 import { removeHTMLTags } from '../../utils.js/RemoveHtml';
 import { toast } from 'react-toastify';
 
@@ -40,12 +40,16 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     width: '50%',
   },
+  textField: {
+    width: '498px',
+  },
 }));
 
 const AddNote = () => {
   const classes = useStyles();
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const [error, setError] = useState('');
 
   const { dispatch } = useContext(AppContext);
 
@@ -56,12 +60,22 @@ const AddNote = () => {
   };
 
   const addNotes = async () => {
-    const bodyWithoutHtml = removeHTMLTags(body);
-    try {
-      await noteRef.add({ title, body: bodyWithoutHtml || '-' });
-      toast.success('New Note Created');
-    } catch (err) {
-      toast.error(err.message);
+    if (!title || !body) {
+      toast.error('Please add note title and description field');
+    } else {
+      const bodyWithoutHtml = removeHTMLTags(body);
+      setTitle('');
+      setBody('');
+      try {
+        await noteRef.add({
+          title,
+          body: bodyWithoutHtml || '-',
+          createdAt: timestamp(),
+        });
+        toast.success('New Note Created');
+      } catch (err) {
+        toast.error(err.message);
+      }
     }
   };
 
@@ -70,20 +84,42 @@ const AddNote = () => {
     setTitle(e.target.value);
   };
   return (
-    <div className={classes.editorContainer}>
-      <h1>Tetx TextEditor</h1>
-      <input
+    <>
+      <div className={classes.editorContainer}>
+        <p style={{ fontSize: '26px', marginBottom: '4rem' }}>
+          The simplest way to keep notes :{'}'}{' '}
+        </p>
+        {/* <input
         className={classes.titleInput}
         placeholder='Note title...'
         onChange={onTitleChange}
-      />
+      /> */}
 
-      <TextEditor value={body} onChange={onBodyChange} />
+        {/* <TextField label='Note Title' variant='outlined' color='secondary' /> */}
+        <TextField
+          id='outlined-flexible'
+          label='Note Title'
+          variant='outlined'
+          color='secondary'
+          type='text'
+          size='small'
+          className={classes.textField}
+          onChange={onTitleChange}
+          value={title}
+          autoComplete='off'
+          required
+        />
+        <TextEditor value={body} onChange={onBodyChange} />
+      </div>
 
-      <Button variant='contained' onClick={addNotes}>
+      <Button
+        variant='contained'
+        onClick={addNotes}
+        style={{ marginTop: '50px' }}
+      >
         Add Note
       </Button>
-    </div>
+    </>
   );
 };
 

@@ -110,8 +110,8 @@ const NoteCard = ({ title, body,noteId }) => {
             <p className={classes.artistName}>{body}</p>
           </div>
         </Box>
-      </Card>
        <LikeSong noteId={noteId} />
+      </Card>
     </Grid>
   );
 };
