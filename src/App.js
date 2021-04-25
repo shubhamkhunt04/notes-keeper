@@ -1,25 +1,77 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 
-function App() {
+// import { AuthProvider } from "./context/auth";
+// import AuthRoute from "./util/AuthRoute";
+// import Dashboard from "./Components/Dashboard/Dashboard";
+// import Login from "./Components/AdminAuth/Login";
+// import SignUp from "./Components/AdminAuth/SignUp";
+import { ThemeProvider } from '@material-ui/core/styles';
+import { darkTheme, lightTheme } from './theme';
+import Login from './components/Auth/Login';
+import { auth } from './firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { Button } from '@material-ui/core';
+import Dashboard from './components/Dashboard/Dashboard';
+
+const App = () => {
+  const [theme, setTheme] = useState(darkTheme);
+  const [themeToggler, setThemeToggler] = useState(true);
+
+  const [user] = useAuthState(auth);
+
+  console.log(user);
+
+  const signOut = () => {
+    auth.signOut();
+    // dispatch({ type: 'SET_ALL' });
+  };
+
+  const themeHandler = () => {
+    if (themeToggler) {
+      setThemeToggler(false);
+      setTheme(lightTheme);
+    } else {
+      setThemeToggler(true);
+      setTheme(darkTheme);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ThemeProvider theme={theme}>
+        {user ? (
+          <>
+            <Router>
+              <Switch>
+                <Route
+                  exact
+                  path='/'
+                  render={() => (
+                    <Dashboard
+                      themeHandler={themeHandler}
+                      themeToggler={themeToggler}
+                    />
+                  )}
+                />
+                {/* <AuthRoute exact path="/signup" component={SignUp} /> */}
+                <Route exact path='/login' component={Login} />
+
+                <Dashboard />
+                <Button onClick={signOut} className='signout-btn'>
+                  Sign Out
+                </Button>
+              </Switch>
+            </Router>
+          </>
+        ) : (
+          <Login />
+        )}
+        {/* <Login /> */}
+      </ThemeProvider>
+    </>
   );
-}
+};
 
 export default App;
