@@ -116,7 +116,7 @@ const AddNote = () => {
           maxWidth: '80vw',
         }}
       >
-        <p className={classes.heading}>The simplest way to keep notes :{'}'}</p>
+        <p className={classes.heading}>The simplest way to keep notes : {'}'}</p>
 
         <div>
           <TextField

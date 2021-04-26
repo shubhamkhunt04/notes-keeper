@@ -17,10 +17,10 @@ import NoteCard from './NoteCard';
 import { AppContext } from '../../AppContext';
 import { Alert } from '@material-ui/lab';
 
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-  },
+const useStyles = makeStyles((theme) => ({
+  // root: {
+  //   display: 'flex',
+  // },
   heading: {
     marginBottom: '10px',
     align: 'left',
@@ -28,18 +28,28 @@ const useStyles = makeStyles({
     color: 'white',
     marginTop: '20px',
   },
-  card: {
-    width: '150px',
-    height: '190px',
+  // card: {
+  //   width: '150px',
+  //   height: '190px',
+  // },
+  // media: {
+  //   width: '120px',
+  //   height: '120px',
+  // },
+  dividerMargin: {
+    marginBottom: '2rem',
   },
-  media: {
-    width: '120px',
-    height: '120px',
+  root: {
+    flexGrow: 1,
   },
-  dividerMargin :{
-    marginBottom:'2rem'
-  }
-});
+  paper: {
+    height: 140,
+    width: 300,
+  },
+  control: {
+    padding: theme.spacing(2),
+  },
+}));
 
 const Notes = () => {
   const classes = useStyles();
@@ -54,26 +64,25 @@ const Notes = () => {
         </div>
       ) : (
         <>
-        <Typography variant='h5' className={classes.heading}>
-          All Notes
-        </Typography>
-        <Divider className={classes.dividerMargin}/>
+          <Divider className={classes.dividerMargin} />
+          <Typography variant='h5' className={classes.heading}>
+            All Notes
+          </Typography>
+          <Divider className={classes.dividerMargin} />
         </>
       )}
-      <div className={classes.root}>
-        <Grid container spacing={4}>
-          {notes?.map((note) => {
-            return (
-              <NoteCard
-                key={note.id}
-                title={note.title}
-                body={note.body}
-                noteId={note.id}
-              />
-            );
-          })}
+
+      <Grid container className={classes.root} spacing={2}>
+        <Grid item xs={12}>
+          <Grid container justify='center' spacing={2}>
+            {notes?.map((note) => (
+              <Grid key={note.id} item>
+                <NoteCard note={note} />
+              </Grid>
+            ))}
+          </Grid>
         </Grid>
-      </div>
+      </Grid>
     </>
   );
 };

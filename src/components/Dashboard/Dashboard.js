@@ -35,14 +35,13 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: 'italic',
     padding: '10px',
   },
-  container:{
-    marginLeft:'200px',
-    marginRight:'200px'
-  }
+  container: {
+    marginLeft: '200px',
+    marginRight: '200px',
+  },
 }));
 
 const Dashboard = () => {
-
   const { dispatch } = useContext(AppContext);
   const getData = () => {
     db.collection(`notesKeeper/notes/${auth.currentUser.uid}`).onSnapshot(
@@ -64,19 +63,16 @@ const Dashboard = () => {
   return (
     <>
       <ToastContainer />
-      <AppNavBar/>
+      <AppNavBar />
 
       <div
         style={{
-          // backgroundColor: '',
-          // marginLeft: '200px',
-          // marginRight: '200px',
-          display:'flex',
-          justifyContent:'center',
-          alignItems:'center',
-          flexDirection:'column',
-          margin:'auto',
-          maxWidth:'80vw'
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+          margin: 'auto',
+          maxWidth: '80vw',
         }}
       >
         <AddNote />
