@@ -31,14 +31,18 @@ const Dashboard = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        dispatch({ type: 'SET_NOTES', payload });
+        // sort the data by createdAt
+        payload.sort((first, second) => {
+          return second.createdAt - first.createdAt;
+        });
+         dispatch({ type: 'SET_NOTES', payload });
       }
     );
   };
 
   useEffect(() => {
     getData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -1,7 +1,8 @@
 import { Button, makeStyles, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import TextEditor from '../../TextEditor/TextEditor';
-import { auth, db, timestamp } from '../../firebase';
+import { auth, db } from '../../firebase';
+import firebase from "../../firebase"
 import { removeHTMLTags } from '../../utils.js/RemoveHtml';
 import { toast } from 'react-toastify';
 
@@ -46,6 +47,7 @@ const AddNote = () => {
   const [body, setBody] = useState('');
 
   const noteRef = db.collection(`notesKeeper/notes/${auth.currentUser.uid}`);
+  const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
   const onBodyChange = (val) => {
     setBody(val);

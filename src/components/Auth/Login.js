@@ -136,7 +136,6 @@ const Login = () => {
               <Button
                 variant='outlined'
                 color='secondary'
-                type='submit'
                 startIcon={
                   <img
                     src={googleLogo}
