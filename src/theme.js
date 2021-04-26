@@ -5,15 +5,20 @@ const darkTheme = createMuiTheme({
   palette: {
     type: "dark",
     primary: {
-      light: "#1A1D24",
-      main: "#0F131A",
-      dark: "#222831",
+      light: "#d8e988",
+      main: "#1F1F1F",
+      dark: "#191919",
       contrastText: "#fff",
     },
     grey: {
       50: "#2a2b2c",
     },
-    secondary: lightBlue,
+    secondary: {
+      main:"#d4e77b"
+    },
+    warning:{
+      main:'#cfe56e'
+    }
   },
 });
 

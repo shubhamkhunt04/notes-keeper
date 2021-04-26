@@ -38,7 +38,11 @@ const AppNavBar = () => {
             Notes Keeper
           </Typography>
 
-          <Button variant='contained' onClick={() => auth.signOut()}>
+          <Button
+            variant='contained'
+            color='secondary'
+            onClick={() => auth.signOut()}
+          >
             Logout
           </Button>
         </Toolbar>

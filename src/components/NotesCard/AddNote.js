@@ -102,6 +102,7 @@ const AddNote = () => {
       <Button
         variant='contained'
         onClick={addNotes}
+        color='secondary'
         className={classes.addNoteBtn}
       >
         Add Note

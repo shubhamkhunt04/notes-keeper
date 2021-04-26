@@ -11,10 +11,10 @@ const useStyles = makeStyles((theme) => ({
     height: '150px',
     padding: '15px',
     borderRadius: '10px',
-    background: theme.palette.grey[50],
+    background: theme.palette.primary.dark,
 
     '&:hover': {
-      background: theme.palette.primary.dark,
+      background: theme.palette.primary.main,
       transform: 'translateY(-5px)',
       transition: '0.4s ease-out',
       cursor: 'pointer',
@@ -35,16 +35,18 @@ const NoteCard = ({ note }) => {
   const classes = useStyles();
 
   return (
+      <div style={{position:'relative'}}>
     <Card className={classes.card} title='This is Title'>
       <Box className={classes.box}>
         <div className={classes.cardTitle}>{title}</div>
 
         <div>
-          <p className={classes.artistName}>{body}</p>
+          <p>{body.slice(1,10)}</p>
         </div>
       </Box>
       <NoteCardBtn noteId={id} />
     </Card>
+      </div>
   );
 };
 

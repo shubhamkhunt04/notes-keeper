@@ -19,12 +19,12 @@ const useStyles = makeStyles((theme) => ({
       marginRight: '10px',
     },
     [theme.breakpoints.down('xl')]: {
-      marginLeft: '70px',
-      marginTop: '15pxpx',
+      marginLeft: '200px',
+      marginTop: '35px',
     },
     [theme.breakpoints.down('sm')]: {
-      marginLeft: '13px',
-      marginTop: '-15px',
+      marginLeft: '150px',
+      marginTop: '35px',
       marginRight: '10px',
     },
   },
@@ -55,14 +55,14 @@ const NoteCardBtn = ({ noteId }) => {
 
   return (
     <div className={classes.actionBtn}>
-      <IconButton onClick={() => deleteBtnHandler(noteId)}>
-        <DeleteOutlineIcon
-          color='secondary'
-          className={classes.actionBtnSize}
-        />
-      </IconButton>
       <IconButton onClick={() => editBtnHandler(noteId)}>
         <EditIcon color='secondary' className={classes.actionBtnSize} />
+      </IconButton>
+      <IconButton onClick={() => deleteBtnHandler(noteId)}>
+        <DeleteOutlineIcon
+          color='error'
+          className={classes.actionBtnSize}
+        />
       </IconButton>
     </div>
   );
