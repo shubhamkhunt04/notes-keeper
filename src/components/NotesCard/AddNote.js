@@ -41,9 +41,27 @@ const useStyles = makeStyles((theme) => ({
     width: '50%',
   },
   textField: {
-    width: '498px',
+    width: '500px',
+    marginBottom: '1.7rem',
     [theme.breakpoints.down('md')]: {
-      width: 'auto',
+      width: '400px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '290px',
+    },
+  },
+  addNoteBtn: {
+    marginTop: '50px',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '73px',
+    },
+  },
+  heading: {
+    fontSize: '26px',
+    marginBottom: '4rem',
+    color: 'white',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '18px',
     },
   },
 }));
@@ -98,32 +116,33 @@ const AddNote = () => {
           maxWidth: '80vw',
         }}
       >
-        <p style={{ fontSize: '26px', marginBottom: '4rem', color: 'white' }}>
-          The simplest way to keep notes :{'}'}
-        </p>
+        <p className={classes.heading}>The simplest way to keep notes :{'}'}</p>
 
-        <TextField
-          id='outlined-flexible'
-          label='Note Title'
-          variant='outlined'
-          color='secondary'
-          type='text'
-          size='small'
-          className={classes.textField}
-          onChange={onTitleChange}
-          value={title}
-          autoComplete='off'
-          required
-          style={{ marginBottom: '1.7rem' }}
-        />
-        <TextEditor value={body} onChange={onBodyChange} />
+        <div>
+          <TextField
+            id='outlined-flexible'
+            label='Note Title'
+            variant='outlined'
+            color='secondary'
+            type='text'
+            size='small'
+            className={classes.textField}
+            onChange={onTitleChange}
+            value={title}
+            autoComplete='off'
+            required
+            // style={{width:'500px'}}
+          />
+          <TextEditor value={body} onChange={onBodyChange} />
+        </div>
       </div>
 
       <Button
         variant='contained'
         onClick={addNotes}
-        style={{ marginTop: '50px' }}
+        className={classes.addNoteBtn}
       >
+        {' '}
         Add Note
       </Button>
     </>

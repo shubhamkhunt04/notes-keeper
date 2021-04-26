@@ -1,21 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { makeStyles, IconButton } from '@material-ui/core';
-import {
-  FavoriteBorderOutlined as FavoriteBorderOutlinedIcon,
-  FavoriteOutlined as FavoriteOutlinedIcon,
-  EditOutlined as EditIcon,
-} from '@material-ui/icons';
+import { EditOutlined as EditIcon } from '@material-ui/icons';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { AppContext } from '../../AppContext';
 import { auth, db } from '../../firebase';
 import { useHistory } from 'react-router';
-// import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
   actionBtn: {
     zIndex: '98',
     position: 'absolute',
-    marginLeft: '185px',
+    marginLeft: '220px',
     marginTop: '30px',
     cursor: 'pointer',
     [theme.breakpoints.down('md')]: {
