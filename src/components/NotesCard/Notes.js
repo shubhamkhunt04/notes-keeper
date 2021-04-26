@@ -1,26 +1,10 @@
 import React, { useContext } from 'react';
-import {
-  Box,
-  Card,
-  CardMedia,
-  Divider,
-  FormControlLabel,
-  FormLabel,
-  Grid,
-  makeStyles,
-  Paper,
-  Radio,
-  RadioGroup,
-  Typography,
-} from '@material-ui/core';
+import { Divider, Grid, makeStyles, Typography } from '@material-ui/core';
 import NoteCard from './NoteCard';
 import { AppContext } from '../../AppContext';
 import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   display: 'flex',
-  // },
   heading: {
     marginBottom: '10px',
     align: 'left',
@@ -28,26 +12,11 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     marginTop: '20px',
   },
-  // card: {
-  //   width: '150px',
-  //   height: '190px',
-  // },
-  // media: {
-  //   width: '120px',
-  //   height: '120px',
-  // },
   dividerMargin: {
     marginBottom: '2rem',
   },
   root: {
     flexGrow: 1,
-  },
-  paper: {
-    height: 140,
-    width: 300,
-  },
-  control: {
-    padding: theme.spacing(2),
   },
 }));
 

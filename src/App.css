@@ -38,6 +38,14 @@
 }
 
 /* loader style */
+
+.loader-container{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 90vh;
+}
+
 .lds-ellipsis {
   display: inline-block;
   position: relative;
@@ -94,3 +102,14 @@
   }
 }
 
+
+/* error404 img */
+.error-img{
+  width: 100vw;
+}
+
+/* text-editor */
+.react-quill-container{
+  color: white;
+  height: 20vh;
+}

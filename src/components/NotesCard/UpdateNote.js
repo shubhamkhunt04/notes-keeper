@@ -29,7 +29,6 @@ const UpdateNote = () => {
   const noteRef = db.collection(`notesKeeper/notes/${auth.currentUser.uid}`);
   const {
     state: { loading },
-    dispatch,
   } = useContext(AppContext);
 
   const [title, setTitle] = useState('');
@@ -43,6 +42,7 @@ const UpdateNote = () => {
     setTitle(e.target.value);
   };
 
+  // load notes
   const getNote = async () => {
     const { title, body } = (await noteRef.doc(noteId).get()).data();
     setTitle(title);
@@ -50,6 +50,7 @@ const UpdateNote = () => {
   };
   useEffect(() => {
     getNote();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateNote = async () => {
@@ -58,6 +59,7 @@ const UpdateNote = () => {
       toast.error('Please add note title and description field');
     } else {
       try {
+        // update note information
         await noteRef.doc(noteId).update({ title, body: bodyWithoutHtml });
         history.push('/');
         toast.success('Note Updated Successfully');
@@ -83,28 +85,23 @@ const UpdateNote = () => {
           }}
         >
           <h1 style={{ color: 'white' }}>Update Note</h1>
-          <Divider />{' '}
-          {/* <input
-          // className={classes.titleInput}
-          placeholder='Note title...'
-          onChange={onTitleChange}
-          value={title}
-        /> */}
-        <div style={{width:'auto'}}>
-          <TextField
-            id='outlined-flexible'
-            label='Note Title'
-            variant='outlined'
-            color='secondary'
-            type='text'
-            size='small'
-            className={classes.textField}
-            onChange={onTitleChange}
-            value={title}
-            autoComplete='off'
-            required
-          />
-          <TextEditor value={body} onChange={onBodyChange} />
+          <Divider />
+
+          <div style={{ width: 'auto' }}>
+            <TextField
+              id='outlined-flexible'
+              label='Note Title'
+              variant='outlined'
+              color='secondary'
+              type='text'
+              size='small'
+              className={classes.textField}
+              onChange={onTitleChange}
+              value={title}
+              autoComplete='off'
+              required
+            />
+            <TextEditor value={body} onChange={onBodyChange} />
           </div>
           <Button
             variant='contained'

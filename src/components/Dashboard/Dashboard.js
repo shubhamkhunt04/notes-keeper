@@ -9,40 +9,21 @@ import Notes from '../NotesCard/Notes';
 import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    width: '340px',
-    height: '97px',
-    margin: '20px',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    textAlign: 'center',
-    fontSize: '22px',
-    padding: '15px',
-    letterSpacing: '3px',
-    background: theme.palette.primary.dark,
-    '&:hover': {
-      background: theme.palette.grey[50],
-      transform: 'translateY(-5px)',
-      transition: '0.4s ease-out',
-    },
-  },
-  cardTitle: {
-    padding: '0.1rem',
-    opacity: '0.9',
-    fontSize: '1.5rem',
-  },
-  cardValue: {
-    fontStyle: 'italic',
-    padding: '10px',
-  },
   container: {
-    marginLeft: '200px',
-    marginRight: '200px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    margin: 'auto',
+    maxWidth: '80vw',
   },
 }));
 
 const Dashboard = () => {
+  const classes = useStyles();
+
   const { dispatch } = useContext(AppContext);
+
   const getData = () => {
     db.collection(`notesKeeper/notes/${auth.currentUser.uid}`).onSnapshot(
       (querySnapShot) => {
@@ -54,27 +35,18 @@ const Dashboard = () => {
       }
     );
   };
+
   useEffect(() => {
     getData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const classes = useStyles();
 
   return (
     <>
       <ToastContainer />
       <AppNavBar />
 
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          margin: 'auto',
-          maxWidth: '80vw',
-        }}
-      >
+      <div className={classes.container}>
         <AddNote />
         <Notes />
       </div>

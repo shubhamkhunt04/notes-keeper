@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { makeStyles, TextField, Button, Divider } from '@material-ui/core';
+import { makeStyles, TextField, Button } from '@material-ui/core';
 import firebase from 'firebase';
 import { auth } from '../../firebase';
 import { AppContext } from '../../AppContext';
@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#f0db72',
     textAlign: 'center',
     marginTop: '90px',
-    fontFamily: 'fangsong',
   },
   textField: {
     margin: '10px',
@@ -34,10 +33,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
+
   const {
     state: { loading },
     dispatch,
   } = useContext(AppContext);
+
   const [error, setError] = useState(false);
   const [emailHelperText, setEmailHelperText] = useState('');
   const [passwordHelperText, setPasswordHelperText] = useState('');
@@ -45,7 +46,9 @@ const Login = () => {
     email: '',
     password: '',
   });
+
   console.log(error);
+
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     // onInput change all the error messages are remove.
@@ -54,6 +57,7 @@ const Login = () => {
     setPasswordHelperText('');
   };
 
+  // auth methods
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   };
@@ -81,6 +85,7 @@ const Login = () => {
     }
   };
 
+  // form validation
   const formValidation = () => {
     // Email validation
     let reg = /^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/;
@@ -110,8 +115,8 @@ const Login = () => {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
+    // call form validator function
     formValidation();
-    console.log('form submited');
   };
 
   return (
@@ -182,7 +187,6 @@ const Login = () => {
                 color='secondary'
                 type='submit'
                 onClick={signIn}
-                // className={classes.btn}
               >
                 Log In
               </Button>
