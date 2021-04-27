@@ -64,6 +64,7 @@ const AddNote = () => {
         await noteRef.add({
           title,
           body: body || '-',
+          pin:false,
           createdAt: timestamp(),
         });
         toast.success('New Note Created');

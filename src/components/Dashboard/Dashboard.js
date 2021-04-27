@@ -35,7 +35,16 @@ const Dashboard = () => {
         payload.sort((first, second) => {
           return second.createdAt - first.createdAt;
         });
-         dispatch({ type: 'SET_NOTES', payload });
+
+        const data = payload.filter((note)=>note.pin)
+        console.log("pin data",data)
+        const data2 = payload.filter((note)=>!note.pin)
+        console.log("pin data2",data2)
+        let result=  [...data,...data2]
+        console.log(result)
+        
+
+         dispatch({ type: 'SET_NOTES', payload:result });
       }
     );
   };

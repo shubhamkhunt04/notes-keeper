@@ -1,10 +1,12 @@
 import { Button, Divider, makeStyles, TextField } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import { auth, db } from '../../firebase';
+import firebase from "../../firebase"
 import TextEditor from '../../TextEditor/TextEditor';
 import { removeHTMLTags } from '../../utils.js/RemoveHtml';
+import { AppContext } from '../../AppContext';
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -24,7 +26,13 @@ const UpdateNote = () => {
   const { noteId } = useParams();
   const history = useHistory();
 
+  const {state:{editorText}} = useContext(AppContext)
+
+  console.log({editorText})
+
   const noteRef = db.collection(`notesKeeper/notes/${auth.currentUser.uid}`);
+  const timestamp = firebase.firestore.FieldValue.serverTimestamp;
+
 
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -49,13 +57,13 @@ const UpdateNote = () => {
   }, []);
 
   const updateNote = async () => {
-    const bodyWithoutHtml = removeHTMLTags(body);
+    // const bodyWithoutHtml = removeHTMLTags(body);
     if (!title || !body) {
       toast.error('Please add note title and description field');
     } else {
       try {
         // update note information
-        await noteRef.doc(noteId).update({ title, body: bodyWithoutHtml });
+        await noteRef.doc(noteId).update({ title, body,updatedAt:timestamp() });
         history.push('/');
         toast.success('Note Updated Successfully');
       } catch (err) {

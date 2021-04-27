@@ -1,31 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles, IconButton } from '@material-ui/core';
 import { EditOutlined as EditIcon } from '@material-ui/icons';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import { AiFillPushpin, AiOutlinePushpin } from 'react-icons/ai';
+
 import { AppContext } from '../../AppContext';
 import { auth, db } from '../../firebase';
 import { useHistory } from 'react-router';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
   actionBtn: {
     zIndex: '98',
     position: 'absolute',
-    marginLeft: '220px',
-    marginTop: '30px',
+    // marginLeft: '220px',
+    // marginTop: '30px',
     cursor: 'pointer',
-    [theme.breakpoints.down('md')]: {
-      marginLeft: '70px',
-      marginTop: '-15px',
-      marginRight: '10px',
-    },
+
     [theme.breakpoints.down('xl')]: {
-      marginLeft: '200px',
+      marginLeft: '165px',
+      marginTop: '30px',
+    },
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '114px',
       marginTop: '30px',
     },
     [theme.breakpoints.down('sm')]: {
-      marginLeft: '150px',
+      marginLeft: '115px',
       marginTop: '35px',
-      marginRight: '10px',
     },
   },
   actionBtnSize: {
@@ -34,13 +36,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NoteCardBtn = ({ noteId }) => {
+const NoteCardBtn = ({ noteId, pin }) => {
   const classes = useStyles();
   const history = useHistory();
+
+  console.log(pin);
 
   const noteRef = db.collection(`notesKeeper/notes/${auth.currentUser.uid}`);
 
   const { dispatch } = useContext(AppContext);
+  const [toggle, setToggle] = useState(false);
 
   const editBtnHandler = async (noteId) => {
     console.log('Edit called', noteId);
@@ -49,22 +54,40 @@ const NoteCardBtn = ({ noteId }) => {
     history.push(`/edit/${noteId}`);
   };
 
+  const pinBtnHandler = async (noteId) => {
+    console.log('pin btn clicked');
+    try {
+      // update note information
+      console.log({ toggle });
+      await noteRef.doc(noteId).update({ pin: toggle });
+      setToggle(!toggle);
+      // if toggle true then note unpinned
+      toggle
+        ? toast.info('Note Pinned Successfully')
+        : toast.info('Note Unpinned Successfully');
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+
   const deleteBtnHandler = async (noteId) => {
     noteRef.doc(noteId).delete();
   };
 
   return (
-    <div className={classes.actionBtn}>
-      <IconButton onClick={() => editBtnHandler(noteId)}>
-        <EditIcon color='secondary' className={classes.actionBtnSize} />
-      </IconButton>
-      <IconButton onClick={() => deleteBtnHandler(noteId)}>
-        <DeleteOutlineIcon
-          color='error'
-          className={classes.actionBtnSize}
-        />
-      </IconButton>
-    </div>
+    <>
+      <div className={classes.actionBtn}>
+        <IconButton onClick={() => editBtnHandler(noteId)}>
+          <EditIcon color='secondary' className={classes.actionBtnSize} />
+        </IconButton>
+        <IconButton onClick={() => pinBtnHandler(noteId)}>
+          {pin ? <AiFillPushpin /> : <AiOutlinePushpin />}
+        </IconButton>
+        <IconButton onClick={() => deleteBtnHandler(noteId)}>
+          <DeleteOutlineIcon color='error' className={classes.actionBtnSize} />
+        </IconButton>
+      </div>
+    </>
   );
 };
 
