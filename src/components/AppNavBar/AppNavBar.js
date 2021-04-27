@@ -4,6 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, IconButton } from '@material-ui/core';
+
 import { auth } from '../../firebase';
 import appLogo from "../../assets/appLogo.svg"
 

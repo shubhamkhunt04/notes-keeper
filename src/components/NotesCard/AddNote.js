@@ -1,9 +1,10 @@
-import { Button, makeStyles, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
+import { Button, makeStyles, TextField } from '@material-ui/core';
+import { toast } from 'react-toastify';
+
 import TextEditor from '../../TextEditor/TextEditor';
 import { auth, db } from '../../firebase';
 import firebase from "../../firebase"
-import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
   container: {

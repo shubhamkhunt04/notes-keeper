@@ -1,6 +1,7 @@
-import { makeStyles } from '@material-ui/core';
 import React, { useContext, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core';
 import { ToastContainer } from 'react-toastify';
+
 import { AppContext } from '../../AppContext';
 import { auth, db } from '../../firebase';
 import AppNavBar from '../AppNavBar/AppNavBar';

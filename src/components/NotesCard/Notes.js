@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { Divider, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+
 import NoteCard from './NoteCard';
 import { AppContext } from '../../AppContext';
-import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   heading: {

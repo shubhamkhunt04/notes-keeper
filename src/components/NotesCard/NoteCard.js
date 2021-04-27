@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Card, makeStyles } from '@material-ui/core';
+
 import NoteCardBtn from './NoteCardBtn';
 import { removeHTMLTags } from '../../utils.js/RemoveHtml';
 

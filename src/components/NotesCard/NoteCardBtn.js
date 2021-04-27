@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router';
 import { makeStyles, IconButton } from '@material-ui/core';
 import { EditOutlined as EditIcon } from '@material-ui/icons';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { AiFillPushpin, AiOutlinePushpin } from 'react-icons/ai';
+import { toast } from 'react-toastify';
 
 import { AppContext } from '../../AppContext';
 import { auth, db } from '../../firebase';
-import { useHistory } from 'react-router';
-import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
   actionBtn: {

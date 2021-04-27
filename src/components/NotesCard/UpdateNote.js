@@ -1,7 +1,8 @@
-import { Button, Divider, makeStyles, TextField } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
+import { Button, Divider, makeStyles, TextField } from '@material-ui/core';
 import { useHistory, useParams } from 'react-router';
 import { toast } from 'react-toastify';
+
 import { auth, db } from '../../firebase';
 import firebase from '../../firebase';
 import TextEditor from '../../TextEditor/TextEditor';

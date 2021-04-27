@@ -128,7 +128,7 @@ const Login = () => {
   return (
     <div className={classes.container}>
       <>
-        <h1 className={classes.title}> Notes Keeper</h1>
+        <h1 className={classes.title}>Notes Keeper</h1>
         <form noValidate autoComplete='off' onSubmit={onFormSubmit}>
           <div>
             <Button

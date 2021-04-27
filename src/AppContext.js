@@ -1,7 +1,4 @@
-// import jwtDecode from 'jwt-decode';
 import { useReducer, createContext } from 'react';
-// import api from './common/api';
-// import { TOKEN } from './common/constant';
 
 const initialState = {
   currentUser: null,
@@ -18,15 +15,6 @@ const reducer = (state, action) => {
       return { ...state, notes: payload || [] };
     case 'SET_EDITOR_TEXT':
       return { ...state, editorText: payload || {} };
-    case 'LOGOUT':
-      // delete api.defaults.headers.common.Authorization;
-      // localStorage.removeItem(TOKEN);
-      return {
-        ...initialState,
-        authenticated: false,
-        authToken: null,
-        user: null,
-      };
     default:
       return { ...state };
   }
