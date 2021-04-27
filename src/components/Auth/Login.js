@@ -3,7 +3,6 @@ import { makeStyles, TextField, Button } from '@material-ui/core';
 import firebase from 'firebase';
 import { auth } from '../../firebase';
 import { AppContext } from '../../AppContext';
-import Loader from '../Loader/Loader';
 import googleLogo from '../../assets/googleLogo.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,10 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles();
 
-  const {
-    state: { loading },
-    dispatch,
-  } = useContext(AppContext);
+  const { dispatch } = useContext(AppContext);
 
   const [error, setError] = useState(false);
   const [emailHelperText, setEmailHelperText] = useState('');
@@ -121,83 +117,78 @@ const Login = () => {
 
   return (
     <div>
-        <>
-          <h1 className={classes.title}>Notes Keeper</h1>
-          <form
-            className={classes.root}
-            noValidate
-            autoComplete='off'
-            onSubmit={onFormSubmit}
-          >
-            <div>
-              <Button
-                variant='outlined'
-                color='secondary'
-                startIcon={
-                  <img
-                    src={googleLogo}
-                    alt='Google'
-                    width='20px'
-                    height='20px'
-                  />
-                }
-                className={classes.textField}
-                onClick={signInWithGoogle}
-              >
-                Sign In With Google
-              </Button>
-            </div>
-            <div>
-              <TextField
-                id='outlined-flexible'
-                label='Email'
-                variant='outlined'
-                color='secondary'
-                type='email'
-                name='email'
-                onChange={onChange}
-                error={emailHelperText ? 1 : 0}
-                helperText={emailHelperText}
-                size='small'
-                className={classes.textField}
-              />
-            </div>
-            <div>
-              <TextField
-                id='outlined-flexible'
-                label='Password'
-                variant='outlined'
-                color='secondary'
-                type='password'
-                name='password'
-                onChange={onChange}
-                error={passwordHelperText ? 1 : 0}
-                helperText={passwordHelperText}
-                size='small'
-                className={classes.textField}
-              />
-            </div>
-            <div>
-              <Button
-                variant='outlined'
-                color='secondary'
-                type='submit'
-                onClick={signIn}
-              >
-                Log In
-              </Button>
-              <Button
-                variant='outlined'
-                color='secondary'
-                type='submit'
-                onClick={signUp}
-                className={classes.btn}
-              >
-                Sign Up
-              </Button>
-            </div>
-          </form>
-        </>
+      <>
+        <h1 className={classes.title}>Notes Keeper</h1>
+        <form
+          className={classes.root}
+          noValidate
+          autoComplete='off'
+          onSubmit={onFormSubmit}
+        >
+          <div>
+            <Button
+              variant='outlined'
+              color='secondary'
+              startIcon={
+                <img src={googleLogo} alt='Google' width='20px' height='20px' />
+              }
+              className={classes.textField}
+              onClick={signInWithGoogle}
+            >
+              Sign In With Google
+            </Button>
+          </div>
+          <div>
+            <TextField
+              id='outlined-flexible'
+              label='Email'
+              variant='outlined'
+              color='secondary'
+              type='email'
+              name='email'
+              onChange={onChange}
+              error={emailHelperText ? 1 : 0}
+              helperText={emailHelperText}
+              size='small'
+              className={classes.textField}
+            />
+          </div>
+          <div>
+            <TextField
+              id='outlined-flexible'
+              label='Password'
+              variant='outlined'
+              color='secondary'
+              type='password'
+              name='password'
+              onChange={onChange}
+              error={passwordHelperText ? 1 : 0}
+              helperText={passwordHelperText}
+              size='small'
+              className={classes.textField}
+            />
+          </div>
+          <div>
+            <Button
+              variant='outlined'
+              color='secondary'
+              type='submit'
+              onClick={signIn}
+            >
+              Log In
+            </Button>
+            <Button
+              variant='outlined'
+              color='secondary'
+              type='submit'
+              onClick={signUp}
+              className={classes.btn}
+            >
+              Sign Up
+            </Button>
+          </div>
+        </form>
+      </>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { makeStyles, IconButton } from '@material-ui/core';
 import { EditOutlined as EditIcon } from '@material-ui/icons';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -45,29 +45,24 @@ const NoteCardBtn = ({ noteId, pin }) => {
   const noteRef = db.collection(`notesKeeper/notes/${auth.currentUser.uid}`);
 
   const { dispatch } = useContext(AppContext);
-  const [toggle, setToggle] = useState(false);
-
-  const editBtnHandler = async (noteId) => {
-    console.log('Edit called', noteId);
-    const payload = (await noteRef.doc(noteId).get()).data();
-    dispatch({ type: 'SET_EDITOR_TEXT', payload });
-    history.push(`/edit/${noteId}`);
-  };
 
   const pinBtnHandler = async (noteId) => {
-    console.log('pin btn clicked');
     try {
       // update note information
-      console.log({ toggle });
-      await noteRef.doc(noteId).update({ pin: toggle });
-      setToggle(!toggle);
-      // if toggle true then note unpinned
-      toggle
+      await noteRef.doc(noteId).update({ pin: !pin });
+      // if pin false then note pinned
+      !pin
         ? toast.info('Note Pinned Successfully')
         : toast.info('Note Unpinned Successfully');
     } catch (err) {
       toast.error(err.message);
     }
+  };
+
+  const editBtnHandler = async (noteId) => {
+    const payload = (await noteRef.doc(noteId).get()).data();
+    dispatch({ type: 'SET_EDITOR_TEXT', payload });
+    history.push(`/edit/${noteId}`);
   };
 
   const deleteBtnHandler = async (noteId) => {

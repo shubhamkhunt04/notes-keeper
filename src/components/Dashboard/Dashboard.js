@@ -42,7 +42,7 @@ const Dashboard = () => {
         // filter all unpinned notes
         const unPinnedNotes = payload.filter((note) => !note.pin);
         console.log('unPinnedNotes data2', unPinnedNotes);
-        // merge pinnned notes first and then unpinned notes
+        // merge pinned notes first and then unpinned notes
         const result = [...pinnedNotes, ...unPinnedNotes];
         console.log(result);
 

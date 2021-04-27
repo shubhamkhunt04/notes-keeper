@@ -1,10 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Box, Card, makeStyles } from '@material-ui/core';
 import NoteCardBtn from './NoteCardBtn';
 import { removeHTMLTags } from '../../utils.js/RemoveHtml';
-import { auth, db } from '../../firebase';
-import { toast } from 'react-toastify';
-import { AppContext } from '../../AppContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,28 +45,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NoteCard = ({ note }) => {
-  const { id, title, body,pin } = note;
+  const { id, title, body, pin } = note;
 
-  console.log("Note card",note.pin,"pin",pin)
   const classes = useStyles();
-  const {state} = useContext(AppContext)
-
-  const noteRef = db.collection(`notesKeeper/notes/${auth.currentUser.uid}`);
-
-  const pinBtnHandler = async (id) => {
-    console.log(id);
-    console.log('pin called');
-    try {
-      // const targetRecord = state.notes.filter((note)=>note.id===id)
-      // console.log("targetRecord",targetRecord)
-      // update note information
-      await noteRef.doc(id).update({ title, body, pin: true });
-      // history.push('/');
-      toast.info('Note Pinned Successfully');
-    } catch (err) {
-      toast.error(err.message);
-    }
-  };
 
   return (
     <div style={{ position: 'relative' }}>
