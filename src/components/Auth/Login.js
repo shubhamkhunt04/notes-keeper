@@ -19,14 +19,24 @@ const useStyles = makeStyles((theme) => ({
   title: {
     color: '#f0db72',
     textAlign: 'center',
-    marginTop: '90px',
+    marginTop: '7rem',
+    marginBottom: '3rem',
   },
   textField: {
     margin: '10px',
     width: '500px',
+    [theme.breakpoints.down('sm')]: {
+      width: '300px',
+    },
   },
   btn: {
     marginLeft: '20px',
+  },
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
 }));
 
@@ -116,15 +126,10 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className={classes.container}>
       <>
-        <h1 className={classes.title}>Notes Keeper</h1>
-        <form
-          className={classes.root}
-          noValidate
-          autoComplete='off'
-          onSubmit={onFormSubmit}
-        >
+        <h1 className={classes.title}> Notes Keeper</h1>
+        <form noValidate autoComplete='off' onSubmit={onFormSubmit}>
           <div>
             <Button
               variant='outlined'
@@ -169,23 +174,34 @@ const Login = () => {
             />
           </div>
           <div>
-            <Button
-              variant='outlined'
-              color='secondary'
-              type='submit'
-              onClick={signIn}
+            <div
+              className={classes.textField}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
             >
-              Log In
-            </Button>
-            <Button
-              variant='outlined'
-              color='secondary'
-              type='submit'
-              onClick={signUp}
-              className={classes.btn}
-            >
-              Sign Up
-            </Button>
+              <Button
+                variant='outlined'
+                color='secondary'
+                type='submit'
+                onClick={signIn}
+                style={{ width: '250px' }}
+              >
+                Log In
+              </Button>
+              <Button
+                variant='outlined'
+                color='secondary'
+                type='submit'
+                onClick={signUp}
+                className={classes.btn}
+                style={{ width: '250px' }}
+              >
+                Sign Up
+              </Button>
+            </div>
           </div>
         </form>
       </>
