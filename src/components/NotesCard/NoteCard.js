@@ -84,7 +84,6 @@ const NoteCard = ({ note }) => {
               <p>{removeHTMLTags(body)}</p>
             )}
           </div>
-          <button onClick={() => pinBtnHandler(id)}>pin</button>
         </Box>
         <NoteCardBtn noteId={id} pin={pin} />
       </Card>

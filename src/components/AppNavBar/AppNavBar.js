@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, IconButton } from '@material-ui/core';
 import { auth } from '../../firebase';
+import appLogo from "../../assets/appLogo.svg"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +34,9 @@ const AppNavBar = () => {
             edge='start'
             className={classes.menuButton}
             color='inherit'
-          ></IconButton>
+          >
+            <img width="40px" height="40px" src={appLogo}  alt="Notes Keeper"/>
+          </IconButton>
           <Typography className={classes.title} variant='h6' noWrap>
             Notes Keeper
           </Typography>
