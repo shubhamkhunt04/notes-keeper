@@ -3,20 +3,42 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import { auth, db } from '../../firebase';
-import firebase from "../../firebase"
+import firebase from '../../firebase';
 import TextEditor from '../../TextEditor/TextEditor';
 import { AppContext } from '../../AppContext';
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    margin: 'auto',
+    maxWidth: '80vw',
+  },
   textField: {
-    marginTop: '3rem',
-    width: '375px',
+    width: '500px',
+    marginBottom: '1.7rem',
     [theme.breakpoints.down('md')]: {
-      minWidth: '150px',
+      width: '400px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '290px',
     },
   },
   updateBtn: {
-    marginTop: '70px',
+    marginTop: '50px',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '73px',
+    },
+  },
+  heading: {
+    fontSize: '26px',
+    marginBottom: '4rem',
+    color: 'white',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '18px',
+    },
   },
 }));
 
@@ -25,13 +47,14 @@ const UpdateNote = () => {
   const { noteId } = useParams();
   const history = useHistory();
 
-  const {state:{editorText}} = useContext(AppContext)
+  const {
+    state: { editorText },
+  } = useContext(AppContext);
 
-  console.log({editorText})
+  console.log({ editorText });
 
   const noteRef = db.collection(`notesKeeper/notes/${auth.currentUser.uid}`);
   const timestamp = firebase.firestore.FieldValue.serverTimestamp;
-
 
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -62,7 +85,9 @@ const UpdateNote = () => {
     } else {
       try {
         // update note information
-        await noteRef.doc(noteId).update({ title, body,updatedAt:timestamp() });
+        await noteRef
+          .doc(noteId)
+          .update({ title, body, updatedAt: timestamp() });
         history.push('/');
         toast.success('Note Updated Successfully');
       } catch (err) {
@@ -72,44 +97,35 @@ const UpdateNote = () => {
   };
   return (
     <>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
-            margin: 'auto',
-            maxWidth: '80vw',
-          }}
-        >
-          <h1 style={{ color: 'white' }}>Update Note</h1>
-          <Divider />
+      <div className={classes.container}>
+        <p className={classes.heading}>Update Note</p>
+        <Divider />
 
-          <div style={{ width: 'auto' }}>
-            <TextField
-              id='outlined-flexible'
-              label='Note Title'
-              variant='outlined'
-              color='secondary'
-              type='text'
-              size='small'
-              className={classes.textField}
-              onChange={onTitleChange}
-              value={title}
-              autoComplete='off'
-              required
-            />
-            <TextEditor value={body} onChange={onBodyChange} />
-          </div>
-          <Button
-            variant='contained'
-            onClick={updateNote}
-            className={classes.updateBtn}
+        <div>
+          <TextField
+            id='outlined-flexible'
+            label='Note Title'
+            variant='outlined'
             color='secondary'
-          >
-            Update Note
-          </Button>
+            type='text'
+            size='small'
+            className={classes.textField}
+            onChange={onTitleChange}
+            value={title}
+            autoComplete='off'
+            required
+          />
+          <TextEditor value={body} onChange={onBodyChange} />
         </div>
+        <Button
+          variant='contained'
+          onClick={updateNote}
+          className={classes.updateBtn}
+          color='secondary'
+        >
+          Update Note
+        </Button>
+      </div>
     </>
   );
 };
