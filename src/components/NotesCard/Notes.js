@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
   },
   dividerMargin: {
     marginBottom: '2rem',
+    background:theme.palette.divider,
+  
   },
   root: {
     flexGrow: 1,
@@ -33,7 +35,7 @@ const Notes = () => {
         </div>
       ) : (
         <>
-          <Divider className={classes.dividerMargin} />
+          <Divider className={classes.dividerMargin}/>
           <Typography variant='h5' className={classes.heading}>
             All Notes
           </Typography>

@@ -121,9 +121,6 @@ const Login = () => {
 
   return (
     <div>
-      {loading ? (
-        <Loader />
-      ) : (
         <>
           <h1 className={classes.title}>Notes Keeper</h1>
           <form
@@ -201,7 +198,6 @@ const Login = () => {
             </div>
           </form>
         </>
-      )}
     </div>
   );
 };

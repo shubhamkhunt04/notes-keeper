@@ -14,9 +14,6 @@ const initialState = {
 const reducer = (state, action) => {
   const { type, payload } = action;
   switch (type) {
-    case 'SET_LOADING':
-      console.log("payload",payload)
-      return { ...state, loading: payload || false };
     case 'SET_NOTES':
       return { ...state, notes: payload || [] };
     case 'SET_EDITOR_TEXT':

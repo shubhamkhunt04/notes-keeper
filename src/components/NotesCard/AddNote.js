@@ -57,13 +57,13 @@ const AddNote = () => {
     if (!title || !body) {
       toast.error('Please add note title and description field');
     } else {
-      const bodyWithoutHtml = removeHTMLTags(body);
+      // const bodyWithoutHtml = removeHTMLTags(body);
       setTitle('');
       setBody('');
       try {
         await noteRef.add({
           title,
-          body: bodyWithoutHtml || '-',
+          body: body || '-',
           createdAt: timestamp(),
         });
         toast.success('New Note Created');

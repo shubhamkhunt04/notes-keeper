@@ -17,7 +17,7 @@ const darkTheme = createMuiTheme({
     },
     warning:{
       main:'#cfe56e'
-    }
+    },
   },
 });
 

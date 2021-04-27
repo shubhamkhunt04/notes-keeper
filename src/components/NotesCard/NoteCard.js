@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Card, makeStyles } from '@material-ui/core';
 import NoteCardBtn from './NoteCardBtn';
+import { removeHTMLTags } from '../../utils.js/RemoveHtml';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -8,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     width: '300px',
-    height: '150px',
+    height: '170px',
     padding: '15px',
     borderRadius: '10px',
     background: theme.palette.primary.dark,
@@ -22,11 +23,20 @@ const useStyles = makeStyles((theme) => ({
 
     [theme.breakpoints.down('md')]: {
       width: '250px',
-      height: '150px',
+      height: '170px',
     },
   },
   control: {
     padding: theme.spacing(2),
+  },
+  box: {
+    height: '6.5rem',
+  },
+  cardTitle: {
+    fontSize: '20px',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '16px',
+    },
   },
 }));
 
@@ -35,18 +45,22 @@ const NoteCard = ({ note }) => {
   const classes = useStyles();
 
   return (
-      <div style={{position:'relative'}}>
-    <Card className={classes.card} title='This is Title'>
-      <Box className={classes.box}>
-        <div className={classes.cardTitle}>{title}</div>
-
-        <div>
-          <p>{body.slice(1,10)}</p>
-        </div>
-      </Box>
-      <NoteCardBtn noteId={id} />
-    </Card>
-      </div>
+    <div style={{ position: 'relative' }}>
+      <Card className={classes.card} title='This is Title'>
+        <Box className={classes.box}>
+          <div className={classes.cardTitle}>{title}</div>
+          <hr />
+          <div>
+            {body?.length > 74 ? (
+              <p>{`${removeHTMLTags(body.slice(0, 125))} ... `}</p>
+            ) : (
+              <p>{removeHTMLTags(body)}</p>
+            )}
+          </div>
+        </Box>
+        <NoteCardBtn noteId={id} />
+      </Card>
+    </div>
   );
 };
 

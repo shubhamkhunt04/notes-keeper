@@ -1,12 +1,10 @@
 import { Button, Divider, makeStyles, TextField } from '@material-ui/core';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { toast } from 'react-toastify';
-import { AppContext } from '../../AppContext';
 import { auth, db } from '../../firebase';
 import TextEditor from '../../TextEditor/TextEditor';
 import { removeHTMLTags } from '../../utils.js/RemoveHtml';
-import Loader from '../Loader/Loader';
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -27,9 +25,6 @@ const UpdateNote = () => {
   const history = useHistory();
 
   const noteRef = db.collection(`notesKeeper/notes/${auth.currentUser.uid}`);
-  const {
-    state: { loading },
-  } = useContext(AppContext);
 
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -68,12 +63,8 @@ const UpdateNote = () => {
       }
     }
   };
-  console.log(loading);
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
         <div
           style={{
             display: 'flex',
@@ -107,11 +98,11 @@ const UpdateNote = () => {
             variant='contained'
             onClick={updateNote}
             className={classes.updateBtn}
+            color='secondary'
           >
             Update Note
           </Button>
         </div>
-      )}
     </>
   );
 };
