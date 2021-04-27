@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   addNoteBtn: {
-    marginTop: '50px',
+    marginTop: '55px',
     [theme.breakpoints.down('sm')]: {
       marginTop: '73px',
     },
