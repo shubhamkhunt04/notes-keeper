@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import { auth, db } from '../../firebase';
 import firebase from "../../firebase"
 import TextEditor from '../../TextEditor/TextEditor';
-import { removeHTMLTags } from '../../utils.js/RemoveHtml';
 import { AppContext } from '../../AppContext';
 
 const useStyles = makeStyles((theme) => ({

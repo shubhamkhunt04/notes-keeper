@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import TextEditor from '../../TextEditor/TextEditor';
 import { auth, db } from '../../firebase';
 import firebase from "../../firebase"
-import { removeHTMLTags } from '../../utils.js/RemoveHtml';
 import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({

@@ -31,20 +31,22 @@ const Dashboard = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        // sort the data by createdAt
+        // sort the notes by createdAt
         payload.sort((first, second) => {
           return second.createdAt - first.createdAt;
         });
 
-        const data = payload.filter((note)=>note.pin)
-        console.log("pin data",data)
-        const data2 = payload.filter((note)=>!note.pin)
-        console.log("pin data2",data2)
-        let result=  [...data,...data2]
-        console.log(result)
-        
+        // filter all pinned notes
+        const pinnedNotes = payload.filter((note) => note.pin);
+        console.log('pinnedNotes data', pinnedNotes);
+        // filter all unpinned notes
+        const unPinnedNotes = payload.filter((note) => !note.pin);
+        console.log('unPinnedNotes data2', unPinnedNotes);
+        // merge pinnned notes first and then unpinned notes
+        const result = [...pinnedNotes, ...unPinnedNotes];
+        console.log(result);
 
-         dispatch({ type: 'SET_NOTES', payload:result });
+        dispatch({ type: 'SET_NOTES', payload: result });
       }
     );
   };
