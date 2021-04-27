@@ -15,19 +15,19 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '80vw',
   },
   textField: {
-    width: '500px',
+    width: '40vw',
     marginBottom: '1.7rem',
     [theme.breakpoints.down('md')]: {
-      width: '400px',
+      width: '80vw',
     },
     [theme.breakpoints.down('sm')]: {
-      width: '290px',
+      width: '90vw',
     },
   },
   addNoteBtn: {
     marginTop: '55px',
     [theme.breakpoints.down('sm')]: {
-      marginTop: '73px',
+      marginTop: '78px',
     },
   },
   heading: {

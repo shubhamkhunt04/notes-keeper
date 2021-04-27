@@ -9,19 +9,20 @@ import Dashboard from './components/Dashboard/Dashboard';
 import UpdateNote from './components/NotesCard/UpdateNote';
 import Error404 from './Error404/Error404';
 import Loader from './components/Loader/Loader';
+import Footer from './components/Footer/Footer';
 
 import './App.css';
 
 const App = () => {
   const [theme] = useState(darkTheme);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const [user] = useAuthState(auth);
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 2000);
   }, []);
 
-  if(loading) return <Loader/>
+  if (loading) return <Loader />;
 
   return (
     <>
@@ -36,12 +37,13 @@ const App = () => {
                 <Route path='*' component={Error404} />
               </Switch>
             </Router>
+            <Footer/>
           </>
         ) : (
           <Login />
         )}
       </ThemeProvider>
-      </>
+    </>
   );
 };
 

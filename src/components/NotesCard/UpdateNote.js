@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   updateBtn: {
     marginTop: '50px',
+    marginBottom:'38vh',
     [theme.breakpoints.down('sm')]: {
       marginTop: '73px',
     },

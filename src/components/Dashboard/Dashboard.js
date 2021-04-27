@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     margin: 'auto',
     maxWidth: '80vw',
+    paddingBottom:'10rem'
   },
 }));
 
@@ -60,7 +61,6 @@ const Dashboard = () => {
     <>
       <ToastContainer />
       <AppNavBar />
-
       <div className={classes.container}>
         <AddNote />
         <Notes />
