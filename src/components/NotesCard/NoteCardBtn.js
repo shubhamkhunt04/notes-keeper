@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router';
 import { makeStyles, IconButton } from '@material-ui/core';
 import { EditOutlined as EditIcon } from '@material-ui/icons';
@@ -6,15 +6,12 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { AiFillPushpin, AiOutlinePushpin } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 
-import { AppContext } from '../../AppContext';
 import { auth, db } from '../../firebase';
 
 const useStyles = makeStyles((theme) => ({
   actionBtn: {
     zIndex: '98',
     position: 'absolute',
-    // marginLeft: '220px',
-    // marginTop: '30px',
     cursor: 'pointer',
 
     [theme.breakpoints.down('xl')]: {
@@ -40,11 +37,7 @@ const NoteCardBtn = ({ noteId, pin }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  console.log(pin);
-
   const noteRef = db.collection(`notesKeeper/notes/${auth.currentUser.uid}`);
-
-  const { dispatch } = useContext(AppContext);
 
   const pinBtnHandler = async (noteId) => {
     try {
@@ -60,13 +53,20 @@ const NoteCardBtn = ({ noteId, pin }) => {
   };
 
   const editBtnHandler = async (noteId) => {
-    const payload = (await noteRef.doc(noteId).get()).data();
-    dispatch({ type: 'SET_EDITOR_TEXT', payload });
-    history.push(`/edit/${noteId}`);
+    try {
+      (await noteRef.doc(noteId).get()).data();
+      history.push(`/edit/${noteId}`);
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   const deleteBtnHandler = async (noteId) => {
-    noteRef.doc(noteId).delete();
+    try {
+      await noteRef.doc(noteId).delete();
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (

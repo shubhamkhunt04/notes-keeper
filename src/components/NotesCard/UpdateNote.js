@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Divider, makeStyles, TextField } from '@material-ui/core';
 import { useHistory, useParams } from 'react-router';
 import { toast } from 'react-toastify';
@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import { auth, db } from '../../firebase';
 import firebase from '../../firebase';
 import TextEditor from '../../TextEditor/TextEditor';
-import { AppContext } from '../../AppContext';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -18,18 +17,18 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '80vw',
   },
   textField: {
-    width: '500px',
+    width: '40vw',
     marginBottom: '1.7rem',
     [theme.breakpoints.down('md')]: {
-      width: '400px',
+      width: '80vw',
     },
     [theme.breakpoints.down('sm')]: {
-      width: '290px',
+      width: '90vw',
     },
   },
   updateBtn: {
     marginTop: '50px',
-    marginBottom:'38vh',
+    marginBottom: '38vh',
     [theme.breakpoints.down('sm')]: {
       marginTop: '73px',
     },
@@ -48,12 +47,6 @@ const UpdateNote = () => {
   const classes = useStyles();
   const { noteId } = useParams();
   const history = useHistory();
-
-  const {
-    state: { editorText },
-  } = useContext(AppContext);
-
-  console.log({ editorText });
 
   const noteRef = db.collection(`notesKeeper/notes/${auth.currentUser.uid}`);
   const timestamp = firebase.firestore.FieldValue.serverTimestamp;

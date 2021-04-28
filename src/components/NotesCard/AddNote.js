@@ -57,7 +57,6 @@ const AddNote = () => {
     if (!title || !body) {
       toast.error('Please add note title and description field');
     } else {
-      // const bodyWithoutHtml = removeHTMLTags(body);
       setTitle('');
       setBody('');
       try {

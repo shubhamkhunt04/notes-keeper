@@ -13,8 +13,6 @@ const reducer = (state, action) => {
   switch (type) {
     case 'SET_NOTES':
       return { ...state, notes: payload || [] };
-    case 'SET_EDITOR_TEXT':
-      return { ...state, editorText: payload || {} };
     default:
       return { ...state };
   }
