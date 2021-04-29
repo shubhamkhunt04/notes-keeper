@@ -13,6 +13,7 @@ import Footer from './components/Footer/Footer';
 import { darkTheme } from './theme';
 
 import './App.css';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   const [theme] = useState(darkTheme);
@@ -23,6 +24,7 @@ const App = () => {
   return (
     <>
       <ThemeProvider theme={theme}>
+      <ToastContainer />
         {user ? (
           <>
             <Router>

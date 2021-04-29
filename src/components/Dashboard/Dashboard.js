@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { ToastContainer } from 'react-toastify';
 
 import { AppContext } from '../../AppContext';
 import { auth, db } from '../../firebase';
@@ -17,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     margin: 'auto',
     maxWidth: '80vw',
-    paddingBottom:'10rem'
+    paddingBottom: '10rem',
   },
 }));
 
@@ -57,7 +56,6 @@ const Dashboard = () => {
 
   return (
     <>
-      <ToastContainer />
       <AppNavBar />
       <div className={classes.container}>
         <AddNote />

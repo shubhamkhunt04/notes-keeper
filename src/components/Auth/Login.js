@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles, TextField, Button } from '@material-ui/core';
 import firebase from 'firebase';
 import { auth } from '../../firebase';
-import { AppContext } from '../../AppContext';
 import googleLogo from '../../assets/googleLogo.png';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,8 +43,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles();
 
-  const { dispatch } = useContext(AppContext);
-
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(false);
   const [emailHelperText, setEmailHelperText] = useState('');
   const [passwordHelperText, setPasswordHelperText] = useState('');
@@ -52,8 +51,6 @@ const Login = () => {
     email: '',
     password: '',
   });
-
-  console.log(error);
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -69,25 +66,20 @@ const Login = () => {
   };
 
   const signIn = async () => {
-    dispatch({ type: 'SET_LOADING', payload: true });
     try {
       // check user auth.
       await auth.signInWithEmailAndPassword(values.email, values.password);
-      dispatch({ type: 'SET_LOADING', payload: false });
     } catch (err) {
-      dispatch({ type: 'SET_LOADING', payload: false });
-      console.log(err);
+      toast.error(err.code);
     }
   };
 
   const signUp = async () => {
-    dispatch({ type: 'SET_LOADING', payload: true });
     try {
       // new user
       await auth.createUserWithEmailAndPassword(values.email, values.password);
-      dispatch({ type: 'SET_LOADING', payload: false });
     } catch (err) {
-      dispatch({ type: 'SET_LOADING', payload: false });
+      toast.error(err.code);
     }
   };
 

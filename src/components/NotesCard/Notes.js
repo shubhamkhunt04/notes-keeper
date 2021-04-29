@@ -32,7 +32,7 @@ const Notes = () => {
     <>
       {notes?.length === 0 ? (
         <div className={classes.heading}>
-          <Alert severity='info'> No Note found yet !! please add notes</Alert>
+          <Alert severity='info'> No Notes found yet !! please add note</Alert>
         </div>
       ) : (
         <>
