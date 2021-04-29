@@ -1,10 +1,6 @@
 import { useReducer, createContext } from 'react';
 
 const initialState = {
-  currentUser: null,
-  selectedNoteIndex: null,
-  selectedNote: null,
-  loading: false,
   notes: null,
 };
 

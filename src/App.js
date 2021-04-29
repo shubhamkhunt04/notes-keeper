@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -16,12 +16,7 @@ import './App.css';
 
 const App = () => {
   const [theme] = useState(darkTheme);
-  const [loading, setLoading] = useState(true);
-  const [user] = useAuthState(auth);
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 2000);
-  }, []);
+  const [user,loading] = useAuthState(auth);
 
   if (loading) return <Loader />;
 
