@@ -119,84 +119,82 @@ const Login = () => {
 
   return (
     <div className={classes.container}>
-      <>
-        <h1 className={classes.title}>Notes Keeper</h1>
-        <form noValidate autoComplete='off' onSubmit={onFormSubmit}>
-          <div>
+      <h1 className={classes.title}>Notes Keeper</h1>
+      <form noValidate autoComplete='off' onSubmit={onFormSubmit}>
+        <div>
+          <Button
+            variant='outlined'
+            color='secondary'
+            startIcon={
+              <img src={googleLogo} alt='Google' width='20px' height='20px' />
+            }
+            className={classes.textField}
+            onClick={signInWithGoogle}
+          >
+            Sign In With Google
+          </Button>
+        </div>
+        <div>
+          <TextField
+            id='outlined-flexible'
+            label='Email'
+            variant='outlined'
+            color='secondary'
+            type='email'
+            name='email'
+            onChange={onChange}
+            error={emailHelperText ? 1 : 0}
+            helperText={emailHelperText}
+            size='small'
+            className={classes.textField}
+          />
+        </div>
+        <div>
+          <TextField
+            id='outlined-flexible'
+            label='Password'
+            variant='outlined'
+            color='secondary'
+            type='password'
+            name='password'
+            onChange={onChange}
+            error={passwordHelperText ? 1 : 0}
+            helperText={passwordHelperText}
+            size='small'
+            className={classes.textField}
+          />
+        </div>
+        <div>
+          <div
+            className={classes.textField}
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
             <Button
               variant='outlined'
               color='secondary'
-              startIcon={
-                <img src={googleLogo} alt='Google' width='20px' height='20px' />
-              }
-              className={classes.textField}
-              onClick={signInWithGoogle}
+              type='submit'
+              onClick={signIn}
+              style={{ width: '250px' }}
             >
-              Sign In With Google
+              Log In
+            </Button>
+            <Button
+              variant='outlined'
+              color='secondary'
+              type='submit'
+              onClick={signUp}
+              className={classes.btn}
+              style={{ width: '250px' }}
+            >
+              Sign Up
             </Button>
           </div>
-          <div>
-            <TextField
-              id='outlined-flexible'
-              label='Email'
-              variant='outlined'
-              color='secondary'
-              type='email'
-              name='email'
-              onChange={onChange}
-              error={emailHelperText ? 1 : 0}
-              helperText={emailHelperText}
-              size='small'
-              className={classes.textField}
-            />
-          </div>
-          <div>
-            <TextField
-              id='outlined-flexible'
-              label='Password'
-              variant='outlined'
-              color='secondary'
-              type='password'
-              name='password'
-              onChange={onChange}
-              error={passwordHelperText ? 1 : 0}
-              helperText={passwordHelperText}
-              size='small'
-              className={classes.textField}
-            />
-          </div>
-          <div>
-            <div
-              className={classes.textField}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <Button
-                variant='outlined'
-                color='secondary'
-                type='submit'
-                onClick={signIn}
-                style={{ width: '250px' }}
-              >
-                Log In
-              </Button>
-              <Button
-                variant='outlined'
-                color='secondary'
-                type='submit'
-                onClick={signUp}
-                className={classes.btn}
-                style={{ width: '250px' }}
-              >
-                Sign Up
-              </Button>
-            </div>
-          </div>
-        </form>
-      </>
+        </div>
+      </form>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -14,17 +14,19 @@ import { darkTheme } from './theme';
 
 import './App.css';
 import { ToastContainer } from 'react-toastify';
+import GithubRibbon from './components/GithubRibbon/GithubRibbon';
 
 const App = () => {
   const [theme] = useState(darkTheme);
-  const [user,loading] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
 
   if (loading) return <Loader />;
 
   return (
     <>
       <ThemeProvider theme={theme}>
-      <ToastContainer />
+        <ToastContainer />
+        <GithubRibbon />
         {user ? (
           <>
             <Router>
@@ -35,7 +37,7 @@ const App = () => {
                 <Route path='*' component={Error404} />
               </Switch>
             </Router>
-            <Footer/>
+            <Footer />
           </>
         ) : (
           <Login />

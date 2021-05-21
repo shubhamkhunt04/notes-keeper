@@ -87,3 +87,8 @@
 a {
   color: #d4e77b;
 }
+
+.github-ribbon{
+  position: absolute;
+  margin-top: 65px;
+} 
